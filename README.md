@@ -1,5 +1,7 @@
 # Watchlist App
 
+Note that Vercel has a serverless function timeout of 5s, due to which MongoDB database cannot be accessed. The app works perfectly on local machine.
+
 ## Built with
 - React
 - Express.js
