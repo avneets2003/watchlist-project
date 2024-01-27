@@ -1,9 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Typography, Box, Dialog, DialogContent, DialogActions, Button, Rating } from '@mui/material';
 import axios from 'axios';
 
 const Watchlist = ({ watchlist, setWatchlist }) => {
   const [deleteIndex, setDeleteIndex] = useState(null);
+
+  useEffect(() => {
+    const fetchWatchlist = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/movies`);
+        setWatchlist(response.data);
+      } catch (error) {
+        console.error('Error fetching watchlist:', error);
+      }
+    };
+
+    fetchWatchlist();
+  }, [setWatchlist]);
 
   const handleDelete = async (movieId) => {
     try {
