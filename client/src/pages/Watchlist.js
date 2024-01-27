@@ -20,7 +20,7 @@ const Watchlist = ({ watchlist, setWatchlist }) => {
 
   const handleDelete = async (movieId) => {
     try {
-      await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/movies/${movieId}`);
+      await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/movies/${movieId}`);
       setWatchlist(prevWatchlist => prevWatchlist.filter(movie => movie._id !== movieId));
     } catch (error) {
       console.error('Error deleting movie from watchlist:', error);
@@ -39,7 +39,6 @@ const Watchlist = ({ watchlist, setWatchlist }) => {
               <a href={movie.link.startsWith('http') ? movie.link : `http://${movie.link}`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: '#000' }}>
                 {movie.title}
               </a>
-              
             </Typography>
             <Rating name="movie-rating" value={Math.round(movie.rating) / 2} precision={0.5} readOnly size="small" style={{ marginLeft: '5px' }} />
             <Typography variant="body1" style={{ marginBottom: '10px' }}>Platform: {movie.platform}</Typography>
@@ -52,7 +51,7 @@ const Watchlist = ({ watchlist, setWatchlist }) => {
                     Are you sure you want to delete "{movie.title}" from the watchlist?
                   </Typography>
                   <DialogActions style={{ justifyContent: 'flex-end' }}>
-                    <Button variant="outlined" onClick={handleDelete}>
+                    <Button variant="outlined" onClick={() => handleDelete(movie._id)}>
                       Delete
                     </Button>
                     <Button variant="outlined" onClick={() => setDeleteIndex(null)}>
